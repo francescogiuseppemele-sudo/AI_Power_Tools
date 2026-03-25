@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Power Tools | Official Site</title>
+  <meta
+    name="description"
+    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to improve recap workflows, context handling, prompt reuse, exports, and power-user productivity."
+  />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    :root {
+      --neon-purple: #b026ff;
+      --neon-blue: #00f3ff;
+      --bg: #050510;
+      --bg-soft: #0b0b18;
+      --card-bg: rgba(20, 20, 45, 0.72);
+      --card-border: rgba(176, 38, 255, 0.18);
+      --text: #ffffff;
+      --text-dim: #b8b8d8;
+      --line: rgba(255,255,255,0.08);
+      --firefox: #ff9500;
+      --success: #5bffb1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.10) 0%, transparent 40%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 5, 16, 0.65);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(176, 38, 255, 0.55));
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .top-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: 0.25s ease;
+    }
+
+    .top-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      padding: 60px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-dim);
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 6vw, 5rem);
+      line-height: 0.98;
+      margin: 0 0 22px;
+      letter-spacing: -1.8px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 8px rgba(176, 38, 255, 0.25));
+    }
+
+    .subtitle {
+      font-size: 1.16rem;
+      color: var(--text-dim);
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .cta-container {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.98rem;
+      transition: 0.28s ease;
+      border: 1px solid rgba(255,255,255,0.10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn i {
+      font-size: 1.3rem;
+    }
+
+    .btn-firefox {
+      color: #fff;
+      background: linear-gradient(135deg, rgba(255,149,0,0.24), rgba(176,38,255,0.18));
+      box-shadow: 0 0 22px rgba(255,149,0,0.12);
+    }
+
+    .btn-firefox:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(255,149,0,0.5);
+      box-shadow: 0 0 32px rgba(255,149,0,0.25);
+    }
+
+    .btn-chrome {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+      cursor: not-allowed;
+      opacity: 0.78;
+    }
+
+    .btn-chrome:hover {
+      transform: none;
+      border-color: rgba(255,255,255,0.10);
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    .badge-soon {
+      display: block;
+      font-size: 0.68rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      line-height: 1.1;
+    }
+
+    .subnote {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+
+    .hero-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--card-border);
+      border-radius: 26px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    .panel-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      margin-bottom: 18px;
+    }
+
+    .panel-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .panel-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .panel-item i {
+      color: var(--success);
+      margin-top: 4px;
+    }
+
+    .panel-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.98rem;
+    }
+
+    .panel-item span {
+      color: var(--text-dim);
+      font-size: 0.92rem;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 12px;
+      letter-spacing: -1px;
+    }
+
+    .section-head p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--text-dim);
+      font-size: 1.06rem;
+    }
+
+    .features-wrap {
+      padding: 70px 0 90px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 22px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+      transition: 0.28s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 243, 255, 0.35);
+      box-shadow: 0 10px 35px rgba(0, 243, 255, 0.08);
+    }
+
+    .feature-card i {
+      font-size: 2rem;
+      background: linear-gradient(var(--neon-purple), var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--text-dim);
+      font-size: 0.96rem;
+    }
+
+    footer {
+      padding: 40px 0 70px;
+      text-align: center;
+      border-top: 1px solid rgba(176, 38, 255, 0.10);
+      color: var(--text-dim);
+    }
+
+    .footer-badge {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: rgba(103, 114, 229, 0.12);
+      border-radius: 999px;
+      color: #8d97ff;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 40px;
+      }
+
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .top-links {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a href="#" class="brand">
+        <img src="Logo.png" alt="AI Power Tools Logo" />
+        <span>AI Power Tools</span>
+      </a>
+
+      <nav class="top-links">
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">
+          <i class="fa-solid fa-bolt"></i>
+          Browser extension for ChatGPT, Claude, and Gemini
+        </div>
+
+        <h1>Beyond AI Limits</h1>
+
+        <p class="subtitle">
+          AI Power Tools adds a serious workflow layer on top of modern AI chats:
+          smarter recap transfers, context awareness, reusable prompts, exports,
+          and productivity tools built for real daily work.
+        </p>
+
+        <div id="install" class="cta-container">
+          <a href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox">
+            <i class="fa-brands fa-firefox-browser"></i>
+            <div style="text-align:left;">
+              <span class="badge-soon">Firefox Add-ons</span>
+              INSTALL NOW
+            </div>
+          </a>
+
+          <span class="btn btn-chrome">
+            <i class="fa-brands fa-chrome"></i>
+            <div style="text-align:left;">
+              <span class="badge-soon">Chrome Web Store</span>
+              COMING SOON
+            </div>
+          </span>
+        </div>
+
+        <div class="subnote">
+          Available now on Firefox. Chrome release coming later.
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-title">Why people use it</div>
+
+        <div class="panel-list">
+          <div class="panel-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>Smart Recap</strong>
+              <span>Transfer long project context into a new chat without losing key logic and progress.</span>
+            </div>
+          </div>
+
+          <div class="panel-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>Session Resume</strong>
+              <span>Create compact session handoffs that preserve the essentials while reducing token load.</span>
+            </div>
+          </div>
+
+          <div class="panel-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>Prompt Library</strong>
+              <span>Save and reuse high-value prompts directly from the extension.</span>
+            </div>
+          </div>
+
+          <div class="panel-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>Right-Side Toolbar</strong>
+              <span>A layout designed to stay accessible without covering the AI input area.</span>
+            </div>
+          </div>
+
+          <div class="panel-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>Free + PRO</strong>
+              <span>Core features for everyone, advanced workflow modules for power users.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features" class="features-wrap">
+    <div class="container">
+      <div class="section-head">
+        <h2>Main Features</h2>
+        <p>
+          Built for users who actually work inside AI chats and need structure,
+          speed, continuity, and less friction.
+        </p>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <i class="fa-solid fa-microchip"></i>
+          <h3>Smart Recap</h3>
+          <p>
+            Generate a structured handoff of the current conversation so you can continue the same project in a fresh chat.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-compress"></i>
+          <h3>Session Resume</h3>
+          <p>
+            Create a denser and smaller transfer block optimized for continuity and lower token usage.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-gauge-high"></i>
+          <h3>Context Awareness</h3>
+          <p>
+            Monitor context pressure and understand when a conversation is becoming too large or unstable.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-bookmark"></i>
+          <h3>Prompt Library</h3>
+          <p>
+            Save and reuse the prompts you actually need during repeated daily workflows.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-thumbtack"></i>
+          <h3>Pinned Instructions</h3>
+          <p>
+            Keep persistent workflow rules ready to reuse during recap and prompt operations.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-file-export"></i>
+          <h3>Export Tools</h3>
+          <p>
+            Export useful content for documentation, storage, structured reuse, and project continuity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 AI Power Tools. Developed by Francesco Giuseppe Mele.</p>
+    <div class="footer-badge">
+      <i class="fa-brands fa-stripe"></i>
+      Payments secured by Stripe
+    </div>
+  </footer>
+
+</body>
+</html>
