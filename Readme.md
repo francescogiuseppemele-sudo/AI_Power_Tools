@@ -21,7 +21,7 @@ AI Power Tools is designed to work on:
 ### Firefox
 Install the extension from Firefox Add-ons:
 
-**[Install on Firefox]([https://addons.mozilla.org/en-US/developers/addons](https://addons.mozilla.org/it/firefox/addon/ai-power-tools/))**
+**[Install on Firefox](https://addons.mozilla.org/it/firefox/addon/ai-power-tools/)**
 
 ### Chrome
 Chrome Web Store release: **Coming Soon**
@@ -418,8 +418,7 @@ Planned or ongoing directions may include:
 
 # Developer / Project Links
 
-- Firefox Add-ons: [Install on Firefox]([YOUR_FIREFOX_ADDON_URL](https://addons.mozilla.org/it/firefox/addon/ai-power-tools/))
-- Official site: [Add your site URL here]
+- Firefox Add-ons: [Install on Firefox](https://addons.mozilla.org/it/firefox/addon/ai-power-tools/)
 - Chrome Web Store: Coming Soon
 
 ---
