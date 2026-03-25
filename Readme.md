@@ -418,7 +418,7 @@ Planned or ongoing directions may include:
 
 # Developer / Project Links
 
-- Firefox Add-ons: [Install on Firefox](YOUR_FIREFOX_ADDON_URL)
+- Firefox Add-ons: [Install on Firefox]([YOUR_FIREFOX_ADDON_URL](https://addons.mozilla.org/it/firefox/addon/ai-power-tools/))
 - Official site: [Add your site URL here]
 - Chrome Web Store: Coming Soon
 
