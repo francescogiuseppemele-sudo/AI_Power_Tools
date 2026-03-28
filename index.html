@@ -1,3 +1,239 @@
+
+
+
+
+=== AI POWER TOOLS v3.2 — STRUCTURED CONTEXT TRANSFER ===
+ISTRUZIONE: Riprendi ESATTAMENTE da dove ci siamo fermati. Non ricominciare.
+
+-- STATO PROGETTO --
+Obiettivo: Ragionamento esteso
+ChatGPT può commettere errori. Assicurati di verificare le informazioni importanti. Vedi Preferenze sui cookie.
+Stack: html, node, javascript, css
+File: te-portal-session.js, routes/activate.js, activate.js, popup.js, background.js, manifest.js
+
+-- CONVERSAZIONE RECENTE (10) --
+[UTENTE]:
+allora fsu firefox ho risolto ma mi dice che la versione esiste gia anche se ho rinominato lo zip come AI_Power_Tools_Firefox_v3.2.2.zip.
+su git non devo postare nulla quindi non capisco cosa vuoi farmi fare con questo codice:
+git clone https://github.com/francescogiuseppemele-sudo/AI_Power_Tools.git AI_Power_Tools_git
+cd .\AI_Power_Tools_git
+dir
+github mi serve solo come vertina e li ho già i link che puntano alla pagina di firefox.
+
+[AI]:
+Esatto: il nome dello zip non conta.
+
+Firefox guarda la versione dentro manifest.json, e nel tuo file è ancora:
+
+manifest.json
+Copia
+Scarica
+Undo
+JSON
+"version": "3.2.1"
+
+quindi AMO ti dice correttamente che la 3.2.1 esiste già. 
+
+manifest
+
+Fai solo questo
+1) Apri manifest.json
+
+Trova:
+
+manifest.json
+Copia
+Scarica
+Undo
+JSON
+"version": "3.2.1"
+
+e sostituisci con:
+
+manifest.json
+Copia
+Scarica
+Undo
+JSON
+"version": "3.2.2"
+2) Facoltativo ma giusto
+
+In popup.html stai ancora mostrando:
+
+manifest.json
+Copia
+Scarica
+Undo
+HTML
+<p>v3.2.1 — ChatGPT · Claude · Gemini</p>
+
+quindi cambia anche quello in:
+
+manifest.json
+Copia
+Scarica
+Undo
+HTML
+<p>v3.2.2 — ChatGPT · Claude · Gemini</p>
+
+così la versione visibile coincide con quella del manifest. 
+
+popup
+
+3) Ricrea lo zip
+
+Sempre zippando il contenuto interno, non la cartella esterna.
+
+4) Ricarica su Firefox
+
+A quel punto AMO vedrà davvero una nuova versione.
+
+Sul Git
+
+Hai ragione tu: se GitHub ti serve solo come vetrina, non devi fare niente.
+
+Il discorso del git clone ... serviva solo se volevi:
+
+versionare anche il codice dell’estensione
+
+fare push delle modifiche
+
+tenere tutto ordinato in repo
+
+Ma non è obbligatorio per pubblicare su Firefox.
+
+Quindi per il tuo caso adesso:
+
+Git: ignoralo
+
+Firefox: cambia manifest.json a 3.2.2
+
+ricrea zip
+
+ricarica
+
+Se vuoi, nel prossimo messaggio ti scrivo esattamente tutti i file in cui mettere 3.2.2 per tenerla perfettamente coerente.
+
+[UTENTE]:
+cosa seleziono?
+
+[AI]:
+Seleziona No.
+
+Dal pacchetto che mi hai fatto vedere, l’estensione è composta da file sorgente leggibili e referenziati direttamente nel manifest.json:
+
+popup.html
+
+popup.js
+
+content.js
+
+styles.css
+
+background.js 
+
+manifest
+
+In più il codice che hai allegato è già in chiaro, non minificato e non bundlato. 
+
+popup
+
+ 
+
+popup
+
+ 
+
+styles
+
+ 
+
+content
+
+Quindi:
+
+No = giusto nel tuo caso attuale
+
+Yes solo se avessi usato roba tipo webpack, minifier, transpiler, generatori o build tools che trasformano il codice
+
+Vai tranquillo con No, poi Continue.
+
+[UTENTE]:
+qui devo mettere qualche cosa?
+
+[AI]:
+Sì, meglio mettere qualcosa in entrambi.
+
+Ti lascio testo già pronto da incollare.
+
+Release Notes
+
+Metti questo:
+
+popup.js
+Copia
+Scarica
+Undo
+Version 3.2.2
+
+- Improved right-side toolbar experience
+- Fixed layout issues and general UI polish
+- Improved context and workflow handling across ChatGPT, Claude, and Gemini
+- General stability improvements and minor bug fixes
+Notes to Reviewer
+
+Metti questo:
+
+popup.js
+Copia
+Scarica
+Undo
+This extension adds a productivity toolbar on ChatGPT, Claude, and Gemini pages.
+
+Main functionality:
+- context recap / structured handoff
+- code block tools
+- local history
+- prompt tools
+- layout controls
+- optional Pro license activation
+
+Permissions used:
+- storage: saves local settings, local history, profiles, and license state
+- downloads: used to export files such as markdown or patch files
+
+Remote endpoints:
+- https://apt-backend-six.vercel.app/*
+Used only for license activation/validation and customer portal access.
+
+The extension runs directly from readable source files and is not bundled or minified.
+
+Questo è coerente con:
+
+storage e downloads nel manifest 
+
+manifest
+
+chiamate al backend Vercel in popup.js e content.js per attivazione/validazione licenza e portal 
+
+popup
+
+ 
+
+content
+
+Quindi:
+
+Release Notes = sì, mettile
+
+Notes to Reviewer = sì, molto meglio metterle
+
+Poi puoi cliccare Submit Version.
+
+[UTENTE]:
+ok ricordati che ho pubblicato la versione rinominata 3.3
+inoltre nel mio git pubblico ho la index ma mi sa che nel post x non la abbiamo messa vero?
+come è il sito?
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +242,7 @@
   <title>AI Power Tools | Official Site</title>
   <meta
     name="description"
-    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to preserve context, improve recap workflows, manage prompts, export useful content, and support serious AI productivity."
+    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to improve recap workflows, context handling, prompt reuse, exports, and power-user productivity."
   />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -60,58 +296,388 @@
 
     .topbar-inner {
       display: flex;
+      align-ite
+[...]
+
+[AI]:
+Sì, me lo ricordo: versione pubblicata corrente = 3.3.
+
+E sì: nel post X che avevamo scritto non avevamo messo il sito.
+Avevamo messo soprattutto:
+
+GitHub
+
+Firefox Add-on
+
+River
+
+Secondo me è meglio così:
+
+bio X → sito
+
+post fissato → sito + Firefox link
+
+GitHub eventualmente come link secondario o in reply
+
+Sul sito ti dico onestamente: è bello.
+Ha un aspetto molto più serio di un classico sito improvvisato. Le cose buone sono:
+
+look pulito e abbastanza premium
+
+CTA Firefox chiara
+
+hero buona
+
+si capisce che è un prodotto vero
+
+la grafica è coerente col mondo AI/tooling
+
+Però ci sono 3 problemi reali:
+
+1) Il messaggio iniziale non è abbastanza forte
+
+Beyond AI Limits è carino, ma è un po’ generico.
+
+Per il tuo prodotto è molto più forte qualcosa tipo:
+
+Stop losing context in ChatGPT
+
+Continue long AI chats without starting over
+
+Structured handoffs for serious AI workflows
+
+Perché il tuo valore vero non è “AI limits” in generale.
+È: non perdere contesto e continuità.
+
+2) Il sito parla ancora di Session Resume
+
+E questo adesso è incoerente con quello che hai deciso di togliere.
+
+Nel tuo HTML compare qui:
+
+nel pannello destra: Session Resume
+
+nelle feature: Session Resume
+
+Quindi queste parti andrebbero aggiornate.
+
+3) Manca un link chiaro al sito nella strategia social
+
+Se questo è il tuo sito pubblico, allora va assolutamente usato nei post X come link principale.
+
+Verdetto secco
+
+Il sito è buono, sopra la media.
+Non è il problema del progetto.
+
+Per renderlo più forte farei solo questo:
+
+cambiare headline
+
+togliere Session Resume
+
+mettere un bottone/link GitHub secondario
+
+allinearlo alla versione 3.3
+
+Ti direi di cambiare queste parti
+Headline
+
+Da:
+
+code.txt
+Copia
+Scarica
+Undo
+HTML
+<h1>Beyond AI Limits</h1>
+
+A qualcosa tipo:
+
+code.txt
+Copia
+Scarica
+Undo
+HTML
+<h1>Stop Losing Context</h1>
+
+oppure:
+
+code.txt
+Copia
+Scarica
+Undo
+HTML
+<h1>Continue AI Chats Properly</h1>
+Subtitle
+
+La riscriverei più aggressiva, tipo:
+
+code.txt
+Copia
+Scarica
+Undo
+HTML
+<p class="subtitle">
+[...]
+
+[UTENTE]:
+dammi l 'html corretto e completo e il link del sito html da mettere su x
+
+[AI]:
+Sì. Il link del sito da mettere su X è questo, ed è attualmente online: 
+francescogiuseppemele-sudo.github.io
+
+all.min.css
+Copia
+Scarica
+Undo
+https://francescogiuseppemele-sudo.github.io/AI_Power_Tools/
+
+Ecco l’HTML completo corretto, con:
+
+headline più forte
+
+niente Session Resume
+
+copy più coerente con la 3.3
+
+link Firefox + GitHub
+
+messaggio più chiaro sul valore reale del prodotto
+
+all.min.css
+Copia
+Scarica
+Undo
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Power Tools | Official Site</title>
+  <meta
+    name="description"
+    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to preserve context, improve recap workflows, manage prompts, export useful content, and support serious AI productivity."
+  />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    :root {
+      --neon-purple: #b026ff;
+      --neon-blue: #00f3ff;
+      --bg: #050510;
+      --bg-soft: #0b0b18;
+      --card-bg: rgba(20, 20, 45, 0.72);
+      --card-border: rgba(176, 38, 255, 0.18);
+      --text: #ffffff;
+      --text-dim: #b8b8d8;
+      --line: rgba(255,255,255,0.08);
+      --firefox: #ff9500;
+      --success: #5bffb1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.10) 0%, transparent 40%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+     
+[...]
+
+
+-- FINE CONTEXT TRANSFER --
+Riprendi dall'ultimo messaggio. Non rifare nulla.
+
+Controllo al volo il link pubblico così ti lascio il riferimento giusto da mettere su X e poi ti ridò l’HTML completo, coerente con la 3.3.
+
+Thought for 1m 7s
+Riprendo da lì.
+
+Il link principale da mettere su X è:
+
+index.html
+Copia
+Scarica
+Undo
+https://francescogiuseppemele-sudo.github.io/AI_Power_Tools/
+L’ho verificato adesso: il sito è online, ma nella versione live compaiono ancora “Beyond AI Limits” e “Session Resume”, quindi sotto ti lascio l’index.html completo già corretto e coerente. La pagina Firefox Add-ons risulta inoltre aggiornata alla versione 3.3. 
+
+Sostituisci tutto il tuo index.html con questo:
+
+index.html
+Copia
+Scarica
+Undo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Power Tools | Official Site</title>
+  <meta
+    name="description"
+    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to preserve context, improve recap workflows, manage prompts, export useful content, and support serious AI productivity."
+  />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <style>
+    :root {
+      --neon-purple: #b026ff;
+      --neon-blue: #00f3ff;
+      --bg: #050510;
+      --bg-soft: #0b0b18;
+      --card-bg: rgba(20, 20, 45, 0.72);
+      --card-border: rgba(176, 38, 255, 0.18);
+      --text: #ffffff;
+      --text-dim: #b8b8d8;
+      --line: rgba(255, 255, 255, 0.08);
+      --firefox: #ff9500;
+      --success: #5bffb1;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.12) 0%, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 5, 16, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 14px 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 800;
-      letter-spacing: 0.4px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
     }
 
-    .brand img {
+    .brand-badge {
       width: 42px;
       height: 42px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(176, 38, 255, 0.55));
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+      color: #050510;
+      font-size: 1.05rem;
+      box-shadow: 0 8px 30px rgba(176, 38, 255, 0.35);
     }
 
-    .top-links {
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-text strong {
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
-    .top-links a {
+    .nav a {
       color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: 0.25s ease;
+      font-size: 0.96rem;
+      transition: 0.2s ease;
     }
 
-    .top-links a:hover {
+    .nav a:hover {
       color: var(--text);
     }
 
+    .nav-cta {
+      padding: 10px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      color: var(--text) !important;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     .hero {
-      min-height: calc(100vh - 72px);
-      display: flex;
-      align-items: center;
-      padding: 60px 0 40px;
+      padding: 72px 0 38px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 36px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 30px;
       align-items: center;
     }
 
@@ -121,515 +687,848 @@
       gap: 10px;
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-dim);
-      font-size: 0.86rem;
+      font-size: 0.9rem;
       margin-bottom: 18px;
+    }
+
+    .eyebrow .live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 12px rgba(91, 255, 177, 0.7);
     }
 
     h1 {
-      font-size: clamp(2.7rem, 6vw, 5rem);
+      margin: 0 0 18px;
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
       line-height: 0.98;
-      margin: 0 0 22px;
-      letter-spacing: -1.8px;
-      text-transform: uppercase;
-      background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+      letter-spacing: -0.04em;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #ffffff 0%, #bda7ff 35%, #77f8ff 100%);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 8px rgba(176, 38, 255, 0.25));
+      background-clip: text;
+      color: transparent;
     }
 
     .subtitle {
-      font-size: 1.16rem;
+      margin: 0;
+      max-width: 760px;
       color: var(--text-dim);
-      max-width: 720px;
-      margin-bottom: 32px;
+      font-size: 1.08rem;
     }
 
-    .cta-container {
+    .hero-actions {
       display: flex;
-      gap: 18px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      gap: 14px;
+      margin-top: 28px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 0.98rem;
-      transition: 0.28s ease;
-      border: 1px solid rgba(255,255,255,0.10);
-      position: relative;
-      overflow: hidden;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
 
-    .btn i {
-      font-size: 1.3rem;
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
-    .btn-firefox {
-      color: #fff;
-      background: linear-gradient(135deg, rgba(255,149,0,0.24), rgba(176,38,255,0.18));
-      box-shadow: 0 0 22px rgba(255,149,0,0.12);
-    }
-
-    .btn-firefox:hover {
-      transform: translateY(-2px) scale(1.02);
-      border-color: rgba(255,149,0,0.5);
-      box-shadow: 0 0 32px rgba(255,149,0,0.25);
+    .btn-primary {
+      background: linear-gradient(135deg, var(--firefox), #ffb347);
+      color: #111;
+      box-shadow: 0 12px 30px rgba(255, 149, 0, 0.22);
     }
 
     .btn-secondary {
-      color: #fff;
-      background: rgba(255,255,255,0.04);
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
     }
 
-    .btn-secondary:hover {
-      transform: translateY(-2px) scale(1.02);
-      border-color: rgba(0,243,255,0.35);
-      box-shadow: 0 0 28px rgba(0,243,255,0.16);
-    }
-
-    .btn-chrome {
-      color: #fff;
-      background: rgba(255,255,255,0.04);
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
-      cursor: not-allowed;
-      opacity: 0.78;
-    }
-
-    .btn-chrome:hover {
-      transform: none;
-      border-color: rgba(255,255,255,0.10);
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
-    }
-
-    .badge-soon {
-      display: block;
-      font-size: 0.68rem;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      line-height: 1.1;
-    }
-
-    .subnote {
+    .hero-note {
+      margin-top: 16px;
       color: var(--text-dim);
       font-size: 0.95rem;
     }
 
-    .hero-panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    .hero-card {
+      background: linear-gradient(180deg, rgba(25, 25, 52, 0.95), rgba(13, 13, 27, 0.92));
       border: 1px solid var(--card-border);
-      border-radius: 26px;
-      padding: 28px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
 
-    .panel-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-dim);
-      margin-bottom: 18px;
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% -35% auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(0, 243, 255, 0.22), transparent 65%);
+      pointer-events: none;
     }
 
-    .panel-list {
+    .mini-window {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mini-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .mini-body {
+      padding: 18px;
       display: grid;
       gap: 14px;
     }
 
-    .panel-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    .mock-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      color: #d9d9ff;
+      background: rgba(176, 38, 255, 0.14);
+      border: 1px solid rgba(176, 38, 255, 0.18);
     }
 
-    .panel-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+    .mock-panel {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 14px;
     }
 
-    .panel-item i {
-      color: var(--success);
-      margin-top: 4px;
+    .mock-title {
+      font-size: 0.93rem;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
-    .panel-item strong {
+    .mock-line {
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
+      margin-bottom: 10px;
+    }
+
+    .mock-line.short {
+      width: 58%;
+    }
+
+    .mock-line.medium {
+      width: 78%;
+    }
+
+    .stats {
+      padding: 22px 0 4px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
       display: block;
-      margin-bottom: 2px;
-      font-size: 0.98rem;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
     }
 
-    .panel-item span {
+    .stat span {
       color: var(--text-dim);
-      font-size: 0.92rem;
+      font-size: 0.95rem;
+    }
+
+    section {
+      padding: 70px 0;
     }
 
     .section-head {
-      text-align: center;
-      margin-bottom: 40px;
+      max-width: 760px;
+      margin-bottom: 28px;
     }
 
     .section-head h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      margin: 0 0 12px;
-      letter-spacing: -1px;
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 3vw, 3rem);
+      letter-spacing: -0.03em;
     }
 
     .section-head p {
-      margin: 0 auto;
-      max-width: 760px;
-      color: var(--text-dim);
-      font-size: 1.06rem;
-    }
-
-    .features-wrap {
-      padding: 70px 0 90px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      padding: 28px;
-      border-radius: 22px;
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(10px);
-      transition: 0.28s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(0, 243, 255, 0.35);
-      box-shadow: 0 10px 35px rgba(0, 243, 255, 0.08);
-    }
-
-    .feature-card i {
-      font-size: 2rem;
-      background: linear-gradient(var(--neon-purple), var(--neon-blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 18px;
-      display: inline-block;
-    }
-
-    .feature-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.12rem;
-    }
-
-    .feature-card p {
       margin: 0;
       color: var(--text-dim);
-      font-size: 0.96rem;
+      font-size: 1.02rem;
     }
 
-    .cta-strip {
-      padding: 0 0 90px;
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, rgba(176,38,255,0.28), rgba(0,243,255,0.22));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-dim);
+      font-size: 0.98rem;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .feature-row .icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.15rem;
+      background: linear-gradient(135deg, rgba(176,38,255,0.24), rgba(0,243,255,0.22));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .feature-row h3 {
+      margin: 0 0 6px;
+      font-size: 1.08rem;
+    }
+
+    .feature-row p {
+      margin: 0;
+      color: var(--text-dim);
+    }
+
+    .install-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .install-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .install-card .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .install-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.3rem;
+    }
+
+    .install-card p {
+      margin: 0 0 18px;
+      color: var(--text-dim);
+    }
+
+    .cta {
+      padding: 20px 0 80px;
     }
 
     .cta-box {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      padding: 34px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(0,243,255,0.16), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(176,38,255,0.18), transparent 30%),
+        linear-gradient(180deg, rgba(22,22,48,0.96), rgba(10,10,22,0.96));
       border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 28px;
+      box-shadow: var(--shadow);
       text-align: center;
-      backdrop-filter: blur(12px);
     }
 
-    .cta-box h3 {
+    .cta-box h2 {
       margin: 0 0 12px;
-      font-size: 1.6rem;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: -0.03em;
     }
 
     .cta-box p {
-      margin: 0 0 20px;
-      color: var(--text-dim);
+      margin: 0 auto 22px;
       max-width: 760px;
-      margin-inline: auto;
+      color: var(--text-dim);
     }
 
     footer {
-      padding: 40px 0 70px;
-      text-align: center;
-      border-top: 1px solid rgba(176, 38, 255, 0.10);
+      padding: 26px 0 34px;
+      border-top: 1px solid rgba(255,255,255,0.06);
       color: var(--text-dim);
+      font-size: 0.95rem;
     }
 
-    .footer-badge {
-      margin-top: 14px;
-      display: inline-flex;
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
-      background: rgba(103, 114, 229, 0.12);
-      border-radius: 999px;
-      color: #8d97ff;
-      font-weight: 700;
-      font-size: 0.92rem;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 920px) {
-      .hero-grid {
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .stats-grid,
+      .install-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        min-height: auto;
-        padding-top: 40px;
+      .topbar-inner {
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
       }
 
-      .topbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
+      .nav {
+        width: 100%;
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 640px) {
+      .container {
+        width: min(100%, calc(100% - 22px));
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      h1 {
+        line-height: 1.02;
+      }
+
       .btn {
         width: 100%;
         justify-content: center;
       }
 
-      .top-links {
-        gap: 10px;
+      .feature-row {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-
-  <div class="topbar">
+  <header class="topbar">
     <div class="container topbar-inner">
-      <a href="#" class="brand">
-        <img src="Logo.png" alt="AI Power Tools Logo" />
-        <span>AI Power Tools</span>
+      <a class="brand" href="#">
+        <div class="brand-badge">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div class="brand-text">
+          <strong>AI Power Tools</strong>
+          <span>ChatGPT · Claude · Gemini</span>
+        </div>
       </a>
 
-      <nav class="top-links">
+      <nav class="nav">
         <a href="#features">Features</a>
         <a href="#install">Install</a>
         <a href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a
+          class="nav-cta"
+          href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Firefox Add-ons
+        </a>
       </nav>
-    </div>
-  </div>
-
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="eyebrow">
-          <i class="fa-solid fa-bolt"></i>
-          Browser extension for ChatGPT, Claude, and Gemini
-        </div>
-
-        <h1>Stop Losing Context</h1>
-
-        <p class="subtitle">
-          AI Power Tools helps you continue long AI chats without rewriting everything.
-          It adds structured recap handoffs, prompt reuse, local history, exports,
-          and a cleaner workflow layer for serious daily use.
-        </p>
-
-        <div id="install" class="cta-container">
-          <a href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox">
-            <i class="fa-brands fa-firefox-browser"></i>
-            <div style="text-align:left;">
-              <span class="badge-soon">Firefox Add-ons</span>
-              INSTALL NOW
-            </div>
-          </a>
-
-          <a href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-            <i class="fa-brands fa-github"></i>
-            <div style="text-align:left;">
-              <span class="badge-soon">Public Repository</span>
-              VIEW GITHUB
-            </div>
-          </a>
-
-          <span class="btn btn-chrome">
-            <i class="fa-brands fa-chrome"></i>
-            <div style="text-align:left;">
-              <span class="badge-soon">Chrome Web Store</span>
-              COMING SOON
-            </div>
-          </span>
-        </div>
-
-        <div class="subnote">
-          Available now on Firefox. Current public release: 3.3.
-        </div>
-      </div>
-
-      <div class="hero-panel">
-        <div class="panel-title">Why people use it</div>
-
-        <div class="panel-list">
-          <div class="panel-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Smart Recap</strong>
-              <span>Transfer long project context into a new chat without losing key logic, progress, and recent decisions.</span>
-            </div>
-          </div>
-
-          <div class="panel-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Project Profiles</strong>
-              <span>Save structured project states and reload them later when switching chat, task, or AI platform.</span>
-            </div>
-          </div>
-
-          <div class="panel-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Prompt Library</strong>
-              <span>Save and reuse high-value prompts directly from the extension.</span>
-            </div>
-          </div>
-
-          <div class="panel-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Right-Side Toolbar</strong>
-              <span>A layout designed to stay accessible without covering the AI input area.</span>
-            </div>
-          </div>
-
-          <div class="panel-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <div>
-              <strong>Free + PRO</strong>
-              <span>Core features for everyone, advanced workflow modules for power users.</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </header>
 
-  <section id="features" class="features-wrap">
-    <div class="container">
-      <div class="section-head">
-        <h2>Main Features</h2>
-        <p>
-          Built for people who actually work inside AI chats and need continuity,
-          structure, speed, and less friction.
-        </p>
-      </div>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="live-dot"></span>
+            Firefox version 3.3 is live
+          </div>
 
-      <div class="features">
-        <div class="feature-card">
-          <i class="fa-solid fa-arrows-rotate"></i>
-          <h3>Smart Recap</h3>
-          <p>
-            Generate a structured handoff of the current conversation so you can continue the same project in a fresh chat.
+          <h1>
+            Stop Losing <span class="gradient">Context</span><br />
+            in AI Chats
+          </h1>
+
+          <p class="subtitle">
+            AI Power Tools adds a serious workflow layer on top of ChatGPT, Claude,
+            and Gemini: structured recap transfers, prompt reuse, export tools,
+            context awareness, and a right-side toolbar built for real daily work.
           </p>
+
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-firefox-browser"></i>
+              Install on Firefox
+            </a>
+
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+              View on GitHub
+            </a>
+          </div>
+
+          <div class="hero-note">
+            Chrome Web Store release: coming soon.
+          </div>
         </div>
 
-        <div class="feature-card">
-          <i class="fa-solid fa-gauge-high"></i>
-          <h3>Context Awareness</h3>
-          <p>
-            Monitor context pressure and understand when a conversation is becoming too large or unstable.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-bookmark"></i>
-          <h3>Prompt Library</h3>
-          <p>
-            Save and reuse the prompts you actually need during repeated daily workflows.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-thumbtack"></i>
-          <h3>Pinned Instructions</h3>
-          <p>
-            Keep persistent workflow rules ready to reuse during recap and continuity operations.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-code-compare"></i>
-          <h3>Diff / Patch Workflow</h3>
-          <p>
-            Compare file versions, inspect changes, and export patches for more controlled code iteration.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-clock-rotate-left"></i>
-          <h3>Local History</h3>
-          <p>
-            Keep local snapshots of code and recover earlier versions when the conversation starts drifting.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-file-export"></i>
-          <h3>Export Tools</h3>
-          <p>
-            Export useful content for documentation, storage, structured reuse, and project continuity.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-grip-lines"></i>
-          <h3>Right-Side Productivity Dock</h3>
-          <p>
-            Keep your tools visible without covering the main chat input area, especially on wide desktop layouts.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-strip">
-    <div class="container">
-      <div class="cta-box">
-        <h3>Built for serious AI workflows</h3>
-        <p>
-          If you work on long chats, coding sessions, structured projects, or repeated prompt workflows,
-          AI Power Tools gives you a cleaner way to keep context under control.
-        </p>
-        <div class="cta-container" style="justify-content:center; margin-bottom:0;">
-          <a href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox">
-            <i class="fa-brands fa-firefox-browser"></i>
-            <div style="text-align:left;">
-              <span class="badge-soon">Firefox Add-ons</span>
-              GET AI POWER TOOLS
+        <div class="hero-card">
+          <div class="mini-window">
+            <div class="mini-top">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
             </div>
-          </a>
+
+            <div class="mini-body">
+              <span class="mock-chip">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Smart Recap
+              </span>
+
+              <div class="mock-panel">
+                <div class="mock-title">Structured handoff</div>
+                <div class="mock-line"></div>
+                <div class="mock-line medium"></div>
+                <div class="mock-line short"></div>
+              </div>
+
+              <div class="mock-panel">
+                <div class="mock-title">Right-side toolbar</div>
+                <div class="mock-line"></div>
+                <div class="mock-line short"></div>
+              </div>
+
+              <div class="mock-panel">
+                <div class="mock-title">Prompt workflow</div>
+                <div class="mock-line medium"></div>
+                <div class="mock-line"></div>
+                <div class="mock-line short"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat">
+          <strong>18+</strong>
+          <span>workflow modules for serious AI usage</span>
+        </div>
+        <div class="stat">
+          <strong>3</strong>
+          <span>supported AI platforms: ChatGPT, Claude, Gemini</span>
+        </div>
+        <div class="stat">
+          <strong>3.3</strong>
+          <span>current Firefox release line</span>
+        </div>
+        <div class="stat">
+          <strong>Free + PRO</strong>
+          <span>core tools for everyone, advanced tools for power users</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Built for people who actually work inside AI chats</h2>
+          <p>
+            Not a toy overlay. AI Power Tools is made for long sessions, project
+            continuity, reusable workflows, and less friction when using AI every day.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-link"></i>
+            </div>
+            <h3>Structured Context Transfer</h3>
+            <p>
+              Move a long project into a fresh chat without manually rewriting
+              everything and without losing the thread.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-table-columns"></i>
+            </div>
+            <h3>Right-Side Toolbar</h3>
+            <p>
+              Keeps tools accessible without covering the message input area,
+              improving daily usability across supported AI sites.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h3>Workflow Layer</h3>
+            <p>
+              Add structure, continuity, exports, reuse, and practical controls on
+              top of normal AI chat workflows.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Main features</h2>
+          <p>
+            A focused toolkit for users who need continuity, context control, prompt
+            reuse, and cleaner technical workflows.
+          </p>
+        </div>
+
+        <div class="feature-list">
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-file-lines"></i></div>
+            <div>
+              <h3>Smart Recap</h3>
+              <p>
+                Generate a structured handoff of the current conversation so you can
+                continue the same project in a new chat with less drift and less repetition.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-gauge-high"></i></div>
+            <div>
+              <h3>Context Awareness</h3>
+              <p>
+                Monitor context pressure and understand when a conversation is becoming
+                too large, unstable, or ready for a clean restart.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-book"></i></div>
+            <div>
+              <h3>Prompt Library</h3>
+              <p>
+                Save and reuse the prompts you actually use in repeated workflows,
+                instead of rewriting them every time.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-thumbtack"></i></div>
+            <div>
+              <h3>Pinned Instructions</h3>
+              <p>
+                Keep stable workflow rules and recurring instructions ready to reuse
+                across projects, recaps, and prompt operations.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-download"></i></div>
+            <div>
+              <h3>Export Tools</h3>
+              <p>
+                Export useful content for documentation, storage, patch sharing, and
+                project continuity outside the chat.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div>
+              <h3>History & Reuse</h3>
+              <p>
+                Keep useful material accessible so repeated work becomes faster,
+                cleaner, and less error-prone.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-code"></i></div>
+            <div>
+              <h3>Code-Oriented Utilities</h3>
+              <p>
+                Built with technical users in mind, including workflow helpers for
+                code review, structured edits, and practical AI-assisted development.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="icon"><i class="fa-solid fa-crown"></i></div>
+            <div>
+              <h3>Free + PRO</h3>
+              <p>
+                Core features are available to everyone, while advanced workflow
+                modules are unlocked for users who need more power.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="container">
+        <div class="section-head">
+          <h2>Install</h2>
+          <p>
+            Available now on Firefox. Chrome release is planned later.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <div class="install-card">
+            <div class="tag">
+              <i class="fa-brands fa-firefox-browser"></i>
+              Live now
+            </div>
+            <h3>Firefox Add-ons</h3>
+            <p>
+              Install the current public version directly from Mozilla Add-ons.
+            </p>
+            <a
+              class="btn btn-primary"
+              href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Open Firefox Listing
+            </a>
+          </div>
+
+          <div class="install-card">
+            <div class="tag">
+              <i class="fa-brands fa-chrome"></i>
+              Coming soon
+            </div>
+            <h3>Chrome Web Store</h3>
+            <p>
+              Chrome support is planned, but the public release is not live yet.
+            </p>
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+              Follow on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Continue long AI projects properly</h2>
+          <p>
+            AI Power Tools helps you preserve context, reduce repetition, organize
+            instructions, and work inside AI chats with more structure and less friction.
+          </p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a
+              class="btn btn-primary"
+              href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-firefox-browser"></i>
+              Install on Firefox
+            </a>
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+              View Source / Site Repo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2026 AI Power Tools. Developed by Francesco Giuseppe Mele.</p>
-    <div class="footer-badge">
-      <i class="fa-brands fa-stripe"></i>
-      Payments secured by Stripe
+    <div class="container footer-inner">
+      <div>© 2026 AI Power Tools. Developed by Francesco Giuseppe Mele.</div>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+        <a
+          href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Firefox Add-ons
+        </a>
+        <a
+          href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
     </div>
   </footer>
-
 </body>
 </html>
+Per X usa come link principale questo:
+
+index.html
+Copia
+Scarica
+Undo
+https://francescogiuseppemele-sudo.github.io/AI_Power_Tools/
+È coerente con il tuo sito pubblico GitHub Pages attuale, mentre la scheda Firefox pubblica risulta effettivamente online come AI Power Tools versione 3.3. 
+
+Se vuoi, nel prossimo messaggio ti scrivo direttamente anche il testo del post X già pronto con questo link.
+
+
+
+
+
+APT
+^
