@@ -6,7 +6,7 @@
   <title>AI Power Tools | Official Site</title>
   <meta
     name="description"
-    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to improve recap workflows, context handling, prompt reuse, exports, and power-user productivity."
+    content="AI Power Tools is a browser extension for ChatGPT, Claude, and Gemini, built to preserve context, improve recap workflows, manage prompts, export useful content, and support serious AI productivity."
   />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -185,6 +185,18 @@
       box-shadow: 0 0 32px rgba(255,149,0,0.25);
     }
 
+    .btn-secondary {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(0,243,255,0.35);
+      box-shadow: 0 0 28px rgba(0,243,255,0.16);
+    }
+
     .btn-chrome {
       color: #fff;
       background: rgba(255,255,255,0.04);
@@ -327,6 +339,31 @@
       font-size: 0.96rem;
     }
 
+    .cta-strip {
+      padding: 0 0 90px;
+    }
+
+    .cta-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .cta-box h3 {
+      margin: 0 0 12px;
+      font-size: 1.6rem;
+    }
+
+    .cta-box p {
+      margin: 0 0 20px;
+      color: var(--text-dim);
+      max-width: 760px;
+      margin-inline: auto;
+    }
+
     footer {
       padding: 40px 0 70px;
       text-align: center;
@@ -387,6 +424,7 @@
       <nav class="top-links">
         <a href="#features">Features</a>
         <a href="#install">Install</a>
+        <a href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
     </div>
   </div>
@@ -399,12 +437,12 @@
           Browser extension for ChatGPT, Claude, and Gemini
         </div>
 
-        <h1>Beyond AI Limits</h1>
+        <h1>Stop Losing Context</h1>
 
         <p class="subtitle">
-          AI Power Tools adds a serious workflow layer on top of modern AI chats:
-          smarter recap transfers, context awareness, reusable prompts, exports,
-          and productivity tools built for real daily work.
+          AI Power Tools helps you continue long AI chats without rewriting everything.
+          It adds structured recap handoffs, prompt reuse, local history, exports,
+          and a cleaner workflow layer for serious daily use.
         </p>
 
         <div id="install" class="cta-container">
@@ -413,6 +451,14 @@
             <div style="text-align:left;">
               <span class="badge-soon">Firefox Add-ons</span>
               INSTALL NOW
+            </div>
+          </a>
+
+          <a href="https://github.com/francescogiuseppemele-sudo/AI_Power_Tools" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <i class="fa-brands fa-github"></i>
+            <div style="text-align:left;">
+              <span class="badge-soon">Public Repository</span>
+              VIEW GITHUB
             </div>
           </a>
 
@@ -426,7 +472,7 @@
         </div>
 
         <div class="subnote">
-          Available now on Firefox. Chrome release coming later.
+          Available now on Firefox. Current public release: 3.3.
         </div>
       </div>
 
@@ -438,15 +484,15 @@
             <i class="fa-solid fa-circle-check"></i>
             <div>
               <strong>Smart Recap</strong>
-              <span>Transfer long project context into a new chat without losing key logic and progress.</span>
+              <span>Transfer long project context into a new chat without losing key logic, progress, and recent decisions.</span>
             </div>
           </div>
 
           <div class="panel-item">
             <i class="fa-solid fa-circle-check"></i>
             <div>
-              <strong>Session Resume</strong>
-              <span>Create compact session handoffs that preserve the essentials while reducing token load.</span>
+              <strong>Project Profiles</strong>
+              <span>Save structured project states and reload them later when switching chat, task, or AI platform.</span>
             </div>
           </div>
 
@@ -483,25 +529,17 @@
       <div class="section-head">
         <h2>Main Features</h2>
         <p>
-          Built for users who actually work inside AI chats and need structure,
-          speed, continuity, and less friction.
+          Built for people who actually work inside AI chats and need continuity,
+          structure, speed, and less friction.
         </p>
       </div>
 
       <div class="features">
         <div class="feature-card">
-          <i class="fa-solid fa-microchip"></i>
+          <i class="fa-solid fa-arrows-rotate"></i>
           <h3>Smart Recap</h3>
           <p>
             Generate a structured handoff of the current conversation so you can continue the same project in a fresh chat.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <i class="fa-solid fa-compress"></i>
-          <h3>Session Resume</h3>
-          <p>
-            Create a denser and smaller transfer block optimized for continuity and lower token usage.
           </p>
         </div>
 
@@ -525,7 +563,23 @@
           <i class="fa-solid fa-thumbtack"></i>
           <h3>Pinned Instructions</h3>
           <p>
-            Keep persistent workflow rules ready to reuse during recap and prompt operations.
+            Keep persistent workflow rules ready to reuse during recap and continuity operations.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-code-compare"></i>
+          <h3>Diff / Patch Workflow</h3>
+          <p>
+            Compare file versions, inspect changes, and export patches for more controlled code iteration.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <h3>Local History</h3>
+          <p>
+            Keep local snapshots of code and recover earlier versions when the conversation starts drifting.
           </p>
         </div>
 
@@ -535,6 +589,35 @@
           <p>
             Export useful content for documentation, storage, structured reuse, and project continuity.
           </p>
+        </div>
+
+        <div class="feature-card">
+          <i class="fa-solid fa-grip-lines"></i>
+          <h3>Right-Side Productivity Dock</h3>
+          <p>
+            Keep your tools visible without covering the main chat input area, especially on wide desktop layouts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <div class="cta-box">
+        <h3>Built for serious AI workflows</h3>
+        <p>
+          If you work on long chats, coding sessions, structured projects, or repeated prompt workflows,
+          AI Power Tools gives you a cleaner way to keep context under control.
+        </p>
+        <div class="cta-container" style="justify-content:center; margin-bottom:0;">
+          <a href="https://addons.mozilla.org/it/firefox/addon/ai-power-tools/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox">
+            <i class="fa-brands fa-firefox-browser"></i>
+            <div style="text-align:left;">
+              <span class="badge-soon">Firefox Add-ons</span>
+              GET AI POWER TOOLS
+            </div>
+          </a>
         </div>
       </div>
     </div>
